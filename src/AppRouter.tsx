@@ -11,35 +11,26 @@ const AppRouter = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "",
-        element: <Home />,
+        path: "browse",
         children: [
           {
-            path: "movies/:movieId",
-            element: <Home />, // 홈페이지에서 영화 상세 모달
+            path: "", // browse main page
+            element: <Home />,
           },
           {
-            path: "series/:seriesId",
-            element: <Home />, // 홈페이지에서 시리즈 상세 모달
+            path: "movies/:movieId", //detail modal for all movies
+            element: <Home />,
           },
-        ],
-      },
-      {
-        path: "movies",
-        element: <Movies />, // 영화 전용 페이지
-        children: [
           {
-            path: ":movieId",
+            path: "series/:seriesId", //detail modal for all series
+            element: <Home />,
+          },
+          {
+            path: "movies", // movies category
             element: <Movies />,
           },
-        ],
-      },
-      {
-        path: "series",
-        element: <Series />, // 시리즈 전용 페이지
-        children: [
           {
-            path: ":seriesId",
+            path: "series", // series category
             element: <Series />,
           },
         ],
@@ -63,6 +54,5 @@ const AppRouter = createBrowserRouter([
 ]);
 
 export default AppRouter;
-
 
 //jetflix
