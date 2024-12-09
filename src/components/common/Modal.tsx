@@ -1,0 +1,7 @@
+function Modal() {
+  return <></>;
+}
+
+export default Modal;
+
+//jetflix
