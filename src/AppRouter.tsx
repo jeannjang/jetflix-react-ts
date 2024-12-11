@@ -11,6 +11,10 @@ const AppRouter = createBrowserRouter([
     element: <Layout />,
     children: [
       {
+        path: "", // 루트 경로
+        element: <Home />, // 기본 페이지로 Home 설정
+      },
+      {
         path: "browse",
         children: [
           {
