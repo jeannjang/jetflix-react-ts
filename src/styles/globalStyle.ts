@@ -53,7 +53,7 @@ table {
   box-sizing: border-box;
 }
 body {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-color:${(props) => props.theme.black.primary};
   color:${(props) => props.theme.white.primary};
 }

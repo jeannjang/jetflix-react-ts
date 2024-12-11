@@ -6,11 +6,17 @@ declare module "styled-components" {
       primary: string;
       second: string;
       third: string;
+      primaryTransparent: string;
+      secondTransparent: string;
+      thirdTransparent: string;
     };
     white: {
       primary: string;
       second: string;
       third: string;
+      primaryTransparent: string;
+      secondTransparent: string;
+      thirdTransparent: string;
     };
     red: string;
     yellow: string;

@@ -2,14 +2,20 @@ import { DefaultTheme } from "styled-components";
 
 export const Theme: DefaultTheme = {
   black: {
-    primary: "#000000",
-    second: "#181818",
-    third: "#2F2F2F",
+    primary: "rgba(0, 0, 0, 1)", // Fully opaque black
+    second: "rgba(24, 24, 24, 1)", // Fully opaque dark gray
+    third: "rgba(47, 47, 47, 1)", // Fully opaque gray
+    primaryTransparent: "rgba(0, 0, 0, 0.5)", // 50% opaque black
+    secondTransparent: "rgba(24, 24, 24, 0.5)", // 50% opaque dark gray
+    thirdTransparent: "rgba(47, 47, 47, 0.5)", // 50% opaque gray
   },
   white: {
-    primary: "#ffff",
-    second: "#BCBCBC",
-    third: "#777777",
+    primary: "rgba(255, 255, 255, 1)", // Fully opaque white
+    second: "rgba(188, 188, 188, 1)", // Fully opaque light gray
+    third: "rgba(119, 119, 119, 1)", // Fully opaque gray
+    primaryTransparent: "rgba(255, 255, 255, 0.5)", // 50% opaque white
+    secondTransparent: "rgba(188, 188, 188, 0.5)", // 50% opaque light gray
+    thirdTransparent: "rgba(119, 119, 119, 0.5)", // 50% opaque gray
   },
   red: "#DA291C",
   yellow: "#FFEF00",
