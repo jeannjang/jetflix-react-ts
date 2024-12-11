@@ -31,4 +31,17 @@ export async function getPopularMovies(page: number = 1) {
   return response.json();
 }
 
+export async function getTrendingMovies() {
+  const response = await fetch(
+    `${API_CONFIG.BASE_URL}/trending/movie/week?language=en-US`,
+    {
+      headers: {
+        Authorization: API_CONFIG.BEARER_TOKEN,
+        accept: "application/json",
+      },
+    }
+  );
+  return response.json();
+}
+
 //jetflix

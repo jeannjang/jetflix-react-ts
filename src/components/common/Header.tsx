@@ -11,14 +11,14 @@ const Nav = styled(motion.nav)`
   position: fixed;
   width: 100%;
   top: 0;
-  font-size: 12px;
+  font-size: 10px;
   padding: 20px 50px; //add backgrond?
   color: white;
   z-index: 100;
 
   @media (max-width: 768px) {
     padding: 15px 20px;
-    font-size: 10px;
+    font-size: 8px;
   }
 `;
 

@@ -31,4 +31,17 @@ export async function getTopRatedTvSeries(page: number = 1) {
   return response.json();
 }
 
+export async function getTrendingTvSeries() {
+  const response = await fetch(
+    `${API_CONFIG.BASE_URL}/trending/tv/week?language=en-US`,
+    {
+      headers: {
+        Authorization: API_CONFIG.BEARER_TOKEN,
+        accept: "application/json",
+      },
+    }
+  );
+  return response.json();
+}
+
 //jetflix
