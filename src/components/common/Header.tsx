@@ -12,12 +12,11 @@ const Nav = styled(motion.nav)`
   width: 100%;
   top: 0;
   font-size: 10px;
-  padding: 20px 50px; //add backgrond?
-  color: white;
+  padding: clamp(13px, 2vw, 16px) clamp(20px, 4vw, 50px);
+  color: ${(props) => props.theme.white.primary};
   z-index: 100;
 
   @media (max-width: 768px) {
-    padding: 15px 20px;
     font-size: 8px;
   }
 `;
@@ -51,25 +50,22 @@ const Items = styled.ul`
   align-items: center;
 
   @media (max-width: 768px) {
-    display: none; // 모바일에서는 메뉴 숨기기
+    /* display: none; // 모바일에서 메뉴 숨기기 */
   }
 `;
 
 const Item = styled.li`
   margin-right: 20px;
-  color: ${(props) => props.theme.white.second};
+  color: ${(props) => props.theme.white.primary};
   transition: color 0.3s ease-in-out;
   position: relative;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  &:hover {
-    color: ${(props) => props.theme.white.primary};
-  }
 `;
 
 const Search = styled.form`
-  color: white;
+  color: ${(props) => props.theme.white.primary};
   display: flex;
   align-items: center;
   position: relative;
@@ -84,10 +80,10 @@ const Search = styled.form`
 
 const Circle = styled(motion.span)`
   position: absolute;
-  width: 5px;
-  height: 5px;
-  border-radius: 2.5px;
-  bottom: -5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  bottom: -6px;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -100,12 +96,14 @@ const Input = styled(motion.input)`
   right: 0px;
   padding: 5px 15px;
   padding-left: 10px;
-  z-index: -1;
-  color: white;
+  color: ${(props) => props.theme.white.primary};
   font-size: 12px;
   background-color: transparent;
   outline: none;
   border: 1px solid ${(props) => props.theme.white.primary};
+  &::placeholder {
+    color: ${(props) => props.theme.white.primaryTransparent};
+  }
 
   @media (max-width: 768px) {
     width: 150px;
@@ -134,7 +132,7 @@ function Header() {
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setIsScrolled(latest > 80);
+    setIsScrolled(latest > 30);
   });
 
   const onValid = (data: IForm) => {
