@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { IMovie } from "../../api/moviesApi";
+import { ITvSeries } from "../../api/tvApi";
 import { makeImagePath } from "../../utils/imagePath";
 
 interface IBannerProps {
-  movieData: IMovie;
+  mediaData: IMovie | ITvSeries;
 }
 
 const BannerWrapper = styled.div<{ $bgPhoto: string }>`
@@ -82,11 +83,15 @@ const InfoButton = styled.button`
   }
 `;
 
-function Banner({ movieData }: IBannerProps) {
+function Banner({ mediaData }: IBannerProps) {
+  const getTitle = (data: IMovie | ITvSeries) => {
+    return "title" in data ? data.title : data.name;
+  };
+
   return (
-    <BannerWrapper $bgPhoto={makeImagePath(movieData.backdrop_path)}>
+    <BannerWrapper $bgPhoto={makeImagePath(mediaData.backdrop_path)}>
       <BannerContent>
-        <Title>{movieData.title}</Title>
+        <Title>{getTitle(mediaData)}</Title>
         <ButtonGroup>
           <InfoButton>More Info</InfoButton>
         </ButtonGroup>
