@@ -18,6 +18,22 @@ export interface IGetMoviesResponse {
   total_results: number;
 }
 
+export async function getTopRatedMovies(
+  page: number = 1,
+  region: string = "nz"
+) {
+  const response = await fetch(
+    `${API_CONFIG.BASE_URL}/movie/top_rated?language=en-US&page=${page}&region=${region}`,
+    {
+      headers: {
+        Authorization: API_CONFIG.BEARER_TOKEN,
+        accept: "application/json",
+      },
+    }
+  );
+  return response.json();
+}
+
 export async function getPopularMovies(page: number = 1) {
   const response = await fetch(
     `${API_CONFIG.BASE_URL}/movie/popular?language=en-US&page=${page}`,
