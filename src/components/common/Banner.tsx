@@ -18,10 +18,10 @@ const BannerWrapper = styled.div<{ $bgPhoto: string }>`
       rgba(0, 0, 0, 0) 45%
     ),
     linear-gradient(
-      rgba(0, 0, 0, 0.6) 0,
-      rgba(0, 0, 0, 0) 50%,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0) 45%,
       rgba(0, 0, 0, 0.1) 90%,
-      rgba(0, 0, 0, 0.8) 100%
+      rgba(0, 0, 0, 0.9) 100%
     ),
     url(${(props) => props.$bgPhoto});
   background-size: contain; // 전체 이미지가 보이도록
