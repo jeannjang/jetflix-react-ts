@@ -20,7 +20,7 @@ export interface IGetMoviesResponse {
 
 export async function getTopRatedMovies(
   page: number = 1,
-  region: string = "nz"
+  region: string = "kr"
 ) {
   const response = await fetch(
     `${API_CONFIG.BASE_URL}/movie/top_rated?language=en-US&page=${page}&region=${region}`,
