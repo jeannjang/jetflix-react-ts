@@ -72,6 +72,7 @@ const BannerImage = styled.div<{ $bgPhoto: string }>`
     url(${(props) => props.$bgPhoto});
   background-size: cover;
   background-position: center top;
+  padding-bottom: 56.25%;
 
   @media (max-width: 768px) {
     height: 200px;
