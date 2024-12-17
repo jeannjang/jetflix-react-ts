@@ -94,12 +94,13 @@ const ModalTitle = styled.h2`
 
 const MetaInfo = styled.div`
   color: ${(props) => props.theme.white.second};
-  font-size: 14px;
+  font-size: 12px;
   margin-bottom: 15px;
 `;
 
 const Overview = styled.p`
-  font-size: 16px;
+  font-size: 13px;
+  font-weight: 300;
   line-height: 1.5;
   color: ${(props) => props.theme.white.primary};
 `;

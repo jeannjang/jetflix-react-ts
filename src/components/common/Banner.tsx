@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { IMovie } from "../../api/moviesApi";
 import { ITvSeries } from "../../api/tvApi";
 import { makeImagePath } from "../../utils/imagePath";
+import { useNavigate } from "react-router-dom";
 
 interface IBannerProps {
   mediaData: IMovie | ITvSeries;
@@ -84,8 +85,19 @@ const InfoButton = styled.button`
 `;
 
 function Banner({ mediaData }: IBannerProps) {
+  const navigate = useNavigate();
+
   const getTitle = (data: IMovie | ITvSeries) => {
     return "title" in data ? data.title : data.name;
+  };
+  const getMediaType = (data: IMovie | ITvSeries) => {
+    return "title" in data ? "movies" : "series";
+  };
+
+  const onMoreInfoClick = () => {
+    const mediaType = getMediaType(mediaData);
+    // MediaGrid의 Modal을 트리거하는 URL로 이동
+    navigate(`/browse/${mediaType}/${mediaData.id}`);
   };
 
   return (
@@ -93,7 +105,7 @@ function Banner({ mediaData }: IBannerProps) {
       <BannerContent>
         <Title>{getTitle(mediaData)}</Title>
         <ButtonGroup>
-          <InfoButton>More Info</InfoButton>
+          <InfoButton onClick={onMoreInfoClick}>More Info</InfoButton>
         </ButtonGroup>
       </BannerContent>
     </BannerWrapper>
