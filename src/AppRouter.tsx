@@ -11,31 +11,41 @@ const AppRouter = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "", // 루트 경로
-        element: <Home />, // 기본 페이지로 Home 설정
+        path: "",
+        element: <Home />,
       },
       {
         path: "browse",
         children: [
           {
-            path: "", // browse main page
+            path: "",
             element: <Home />,
           },
           {
-            path: "movies/:movieId", //detail modal for all movies
-            element: <Home />,
+            path: "movies",
+            children: [
+              {
+                path: "",
+                element: <Movies />,
+              },
+              {
+                path: ":movieId",
+                element: <Movies />,
+              },
+            ],
           },
           {
-            path: "series/:seriesId", //detail modal for all series
-            element: <Home />,
-          },
-          {
-            path: "movies", // movies category
-            element: <Movies />,
-          },
-          {
-            path: "series", // series category
-            element: <Series />,
+            path: "series",
+            children: [
+              {
+                path: "",
+                element: <Series />,
+              },
+              {
+                path: ":seriesId",
+                element: <Series />,
+              },
+            ],
           },
         ],
       },
