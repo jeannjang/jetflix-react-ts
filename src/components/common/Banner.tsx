@@ -20,7 +20,7 @@ const BannerWrapper = styled.div<{ $bgPhoto: string }>`
     linear-gradient(
       rgba(0, 0, 0, 0.6) 0%,
       rgba(0, 0, 0, 0) 45%,
-      rgba(0, 0, 0, 0.1) 90%,
+      rgba(0, 0, 0, 0.3) 85%,
       rgba(0, 0, 0, 0.9) 100%
     ),
     url(${(props) => props.$bgPhoto});

@@ -109,16 +109,12 @@ function MediaGrid({ data, mediaType }: IMediaGridProps) {
         ))}
       </GridContainer>
 
-      <Modal isOpen={!!modalMatch} onClose={onModalClose}>
-        {clickedItem && (
-          <motion.div
-            layoutId={modalMatch?.params.id}
-            style={{ width: "100%", height: "100%" }}
-          >
-            {/* 모달 내용은 향후 구현 */}
-          </motion.div>
-        )}
-      </Modal>
+      <Modal
+        isOpen={!!modalMatch}
+        onClose={onModalClose}
+        imagePath={clickedItem?.backdrop_path}
+        layoutId={modalMatch?.params.id || ""}
+      />
     </GridSection>
   );
 }

@@ -1,10 +1,12 @@
 import { motion, AnimatePresence } from "motion/react";
 import styled from "styled-components";
+import { makeImagePath } from "../../utils/imagePath";
 
 interface IModalProps {
   isOpen: boolean;
   onClose: () => void;
-  children: React.ReactNode;
+  layoutId?: string;
+  imagePath?: string;
 }
 
 const Overlay = styled(motion.div)`
@@ -60,7 +62,23 @@ const CloseButton = styled.button`
   }
 `;
 
-function Modal({ isOpen, onClose, children }: IModalProps) {
+const BannerImage = styled.div<{ $bgPhoto: string }>`
+  height: 300px;
+  background-image: linear-gradient(
+      to bottom,
+      transparent 40%,
+      ${(props) => props.theme.black.second}
+    ),
+    url(${(props) => props.$bgPhoto});
+  background-size: cover;
+  background-position: center top;
+
+  @media (max-width: 768px) {
+    height: 200px;
+  }
+`;
+
+function Modal({ isOpen, onClose, imagePath, layoutId }: IModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -71,13 +89,16 @@ function Modal({ isOpen, onClose, children }: IModalProps) {
           onClick={onClose}
         >
           <ModalContainer
+            layoutId={layoutId}
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.5, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
           >
             <CloseButton onClick={onClose}>×</CloseButton>
-            {children}
+            {imagePath && (
+              <BannerImage $bgPhoto={makeImagePath(imagePath, "w780")} />
+            )}
           </ModalContainer>
         </Overlay>
       )}
