@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-export type MediaType = "movies" | "series";
+export type MediaType = "movies" | "series" | "home";
 export type FilterCategory =
   | "all"
   | "mustWatch"
@@ -13,5 +13,10 @@ export const mediaFilterState = (mediaType: MediaType) =>
     key: `${mediaType}Filter`,
     default: "all",
   });
+
+export const homeFilterState = atom<FilterCategory>({
+  key: "homeFilter",
+  default: "all",
+});
 
 //jetflix
