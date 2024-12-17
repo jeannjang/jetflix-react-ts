@@ -85,11 +85,7 @@ function Movies() {
           <ContentContainer>
             <FilterButtons mediaType="movies" />
             {filteredContent && (
-              <MediaGrid
-                data={filteredContent}
-                mediaType="movie"
-                title="" // GridTitle을 표시하지 않도록 빈 문자열 전달
-              />
+              <MediaGrid data={filteredContent} mediaType="movies" />
             )}
           </ContentContainer>
         </>
