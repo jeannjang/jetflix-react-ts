@@ -1,7 +1,10 @@
-// components/common/FilterButtons.tsx
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import { mediaFilterState, MediaType } from "../../atoms/filterMedia";
+import {
+  mediaFilterState,
+  MediaType,
+  homeFilterState,
+} from "../../atoms/filterMedia";
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -39,7 +42,9 @@ interface FilterButtonsProps {
 
 function FilterButtons({ mediaType }: FilterButtonsProps) {
   const [selectedCategory, setSelectedCategory] = useRecoilState(
-    mediaFilterState(mediaType)
+    mediaType === "home"
+      ? homeFilterState
+      : mediaFilterState(mediaType as "movies" | "series")
   );
 
   return (

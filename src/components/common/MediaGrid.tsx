@@ -2,13 +2,14 @@ import styled from "styled-components";
 import { motion } from "motion/react";
 import { IMovie } from "../../api/moviesApi";
 import { ITvSeries } from "../../api/tvApi";
+import { MediaType } from "../../atoms/filterMedia";
 import { makeImagePath } from "../../utils/imagePath";
 import { useNavigate, useMatch } from "react-router-dom";
 import Modal from "./Modal";
 
 interface IMediaGridProps {
   data: (IMovie | ITvSeries)[];
-  mediaType: "movies" | "series";
+  mediaType: MediaType;
 }
 
 const GridSection = styled.section`
