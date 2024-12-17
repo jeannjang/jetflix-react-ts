@@ -1,10 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import { getTrendingTvSeries, IGetTvSeriesResponse } from "../api/tvApi";
+import {
+  getTrendingTvSeries,
+  getTopRatedTvSeries,
+  getPopularTvSeries,
+  IGetTvSeriesResponse,
+} from "../api/tvApi";
 import styled from "styled-components";
 import Banner from "../components/common/Banner";
+import MediaGrid from "../components/common/MediaGrid";
+import { mediaFilterState } from "../atoms/filterMedia";
+import { useRecoilState } from "recoil";
+import FilterButtons from "../components/common/FilterButtons";
 
 const Wrapper = styled.div`
-  height: 200vh;
+  overflow-x: hidden;
 `;
 
 const Loading = styled.div`
@@ -15,18 +24,85 @@ const Loading = styled.div`
   color: ${(props) => props.theme.white.primary};
 `;
 
+const ContentContainer = styled.div`
+  position: relative;
+  margin-top: -60px;
+  padding-bottom: 50px;
+`;
+
 function Series() {
-  const { data, isLoading } = useQuery<IGetTvSeriesResponse>({
-    queryKey: ["movies", "trending"],
-    queryFn: getTrendingTvSeries,
-  });
+  const [selectedCategory] = useRecoilState(mediaFilterState("series"));
+
+  const { data: trendingData, isLoading: isTrendingLoading } =
+    useQuery<IGetTvSeriesResponse>({
+      queryKey: ["series", "trending"],
+      queryFn: getTrendingTvSeries,
+    });
+
+  const { data: popularData, isLoading: isPopularLoading } =
+    useQuery<IGetTvSeriesResponse>({
+      queryKey: ["series", "popular"],
+      queryFn: () => getPopularTvSeries(),
+    });
+
+  const { data: topRatedData, isLoading: isTopRatedLoading } =
+    useQuery<IGetTvSeriesResponse>({
+      queryKey: ["series", "topRated"],
+      queryFn: () => getTopRatedTvSeries(),
+    });
+
+  const isLoading = isTrendingLoading || isPopularLoading || isTopRatedLoading;
+
+  const getFilteredContent = () => {
+    switch (selectedCategory) {
+      case "mustWatch":
+        return topRatedData?.results;
+      case "trending":
+        return trendingData?.results;
+      case "popular":
+        return popularData?.results;
+      case "all": {
+        // 모든 결과를 하나의 배열로 합침
+        const allContent = [
+          ...(topRatedData?.results || []),
+          ...(trendingData?.results || []),
+          ...(popularData?.results || []),
+        ];
+
+        // id를 기준으로 중복 제거
+        const uniqueContent = allContent.reduce((unique, item) => {
+          const exists = unique.find((u) => u.id === item.id);
+          if (!exists) {
+            unique.push(item);
+          }
+          return unique;
+        }, [] as typeof allContent);
+
+        return uniqueContent;
+      }
+      default:
+        return [];
+    }
+  };
+
+  const filteredContent = getFilteredContent();
 
   return (
     <Wrapper>
       {isLoading ? (
         <Loading>Loading...</Loading>
       ) : (
-        data?.results[0] && <Banner mediaData={data.results[0]} />
+        <>
+          {trendingData?.results[0] && (
+            <Banner mediaData={trendingData.results[0]} />
+          )}
+          <ContentContainer>
+            <FilterButtons mediaType="series" />
+            {filteredContent && (
+              <MediaGrid data={filteredContent} mediaType="series" />
+            )}
+          </ContentContainer>
+        </>
       )}
     </Wrapper>
   );

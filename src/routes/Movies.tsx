@@ -61,12 +61,25 @@ function Movies() {
         return trendingData?.results;
       case "popular":
         return popularData?.results;
-      case "all":
-        return [
+      case "all": {
+        // 모든 결과를 하나의 배열로 합침
+        const allContent = [
           ...(topRatedData?.results || []),
           ...(trendingData?.results || []),
           ...(popularData?.results || []),
         ];
+
+        // id를 기준으로 중복 제거
+        const uniqueContent = allContent.reduce((unique, item) => {
+          const exists = unique.find((u) => u.id === item.id);
+          if (!exists) {
+            unique.push(item);
+          }
+          return unique;
+        }, [] as typeof allContent);
+
+        return uniqueContent;
+      }
       default:
         return [];
     }
