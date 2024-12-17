@@ -3,11 +3,12 @@ import { motion } from "motion/react";
 import { IMovie } from "../../api/moviesApi";
 import { ITvSeries } from "../../api/tvApi";
 import { makeImagePath } from "../../utils/imagePath";
+import { useNavigate, useMatch } from "react-router-dom";
+import Modal from "./Modal";
 
 interface IMediaGridProps {
-  title: string;
-  data: IMovie[] | ITvSeries[];
-  mediaType: "movie" | "series";
+  data: (IMovie | ITvSeries)[];
+  mediaType: "movies" | "series";
 }
 
 const GridSection = styled.section`
@@ -15,12 +16,12 @@ const GridSection = styled.section`
   margin-top: 10px;
 `;
 
-const GridTitle = styled.h2`
-  font-family: "Poppins", sans-serif;
-  font-size: clamp(10px, 1.5vw, 16px);
-  margin-bottom: 20px;
-  color: ${(props) => props.theme.white.primary};
-`;
+// const GridTitle = styled.h2`
+//   font-family: "Poppins", sans-serif;
+//   font-size: clamp(10px, 1.5vw, 16px);
+//   margin-bottom: 20px;
+//   color: ${(props) => props.theme.white.primary};
+// `;
 
 const GridContainer = styled.div`
   display: grid;
@@ -69,17 +70,37 @@ const PosterImage = styled.img`
   }
 `;
 
-function MediaGrid({ title, data, mediaType }: IMediaGridProps) {
+function MediaGrid({ data, mediaType }: IMediaGridProps) {
+  const navigate = useNavigate();
+  const modalMatch = useMatch(`/browse/${mediaType}/:id`);
+
   const getTitle = (item: IMovie | ITvSeries) => {
     return "title" in item ? item.title : item.name;
   };
 
+  const onModalClicked = (id: number) => {
+    navigate(`/browse/${mediaType}/${id}`);
+  };
+
+  const onModalClose = () => {
+    navigate(-1);
+  };
+
+  const clickedItem = modalMatch?.params.id
+    ? data.find((item) => item.id === Number(modalMatch.params.id))
+    : null;
+
   return (
     <GridSection>
-      {title && <GridTitle>{title}</GridTitle>}
       <GridContainer>
         {data.map((item) => (
-          <PosterCard key={item.id} whileHover="hover" initial="normal">
+          <PosterCard
+            key={item.id}
+            whileHover="hover"
+            initial="normal"
+            layoutId={item.id.toString()}
+            onClick={() => onModalClicked(item.id)}
+          >
             <PosterImage
               src={makeImagePath(item.poster_path, "w500")}
               alt={getTitle(item)}
@@ -87,6 +108,17 @@ function MediaGrid({ title, data, mediaType }: IMediaGridProps) {
           </PosterCard>
         ))}
       </GridContainer>
+
+      <Modal isOpen={!!modalMatch} onClose={onModalClose}>
+        {clickedItem && (
+          <motion.div
+            layoutId={modalMatch?.params.id}
+            style={{ width: "100%", height: "100%" }}
+          >
+            {/* 모달 내용은 향후 구현 */}
+          </motion.div>
+        )}
+      </Modal>
     </GridSection>
   );
 }
