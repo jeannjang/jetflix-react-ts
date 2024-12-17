@@ -1,12 +1,14 @@
 import { motion, AnimatePresence } from "motion/react";
 import styled from "styled-components";
 import { makeImagePath } from "../../utils/imagePath";
+import { IMovie } from "../../api/moviesApi";
+import { ITvSeries } from "../../api/tvApi";
 
 interface IModalProps {
   isOpen: boolean;
   onClose: () => void;
   layoutId?: string;
-  imagePath?: string;
+  mediaData?: IMovie | ITvSeries;
 }
 
 const Overlay = styled(motion.div)`
@@ -79,7 +81,40 @@ const BannerImage = styled.div<{ $bgPhoto: string }>`
   }
 `;
 
-function Modal({ isOpen, onClose, imagePath, layoutId }: IModalProps) {
+const ModalContent = styled.div`
+  padding: 20px;
+  color: ${(props) => props.theme.white.primary};
+`;
+
+const ModalTitle = styled.h2`
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 24px;
+  margin-bottom: 10px;
+`;
+
+const MetaInfo = styled.div`
+  color: ${(props) => props.theme.white.second};
+  font-size: 14px;
+  margin-bottom: 15px;
+`;
+
+const Overview = styled.p`
+  font-size: 16px;
+  line-height: 1.5;
+  color: ${(props) => props.theme.white.primary};
+`;
+
+function Modal({ isOpen, onClose, mediaData, layoutId }: IModalProps) {
+  const getTitle = (data?: IMovie | ITvSeries) => {
+    if (!data) return "";
+    return "title" in data ? data.title : data.name;
+  };
+
+  const getDate = (data?: IMovie | ITvSeries) => {
+    if (!data) return "";
+    return "release_date" in data ? data.release_date : data.first_air_date;
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -97,8 +132,20 @@ function Modal({ isOpen, onClose, imagePath, layoutId }: IModalProps) {
             onClick={(e) => e.stopPropagation()}
           >
             <CloseButton onClick={onClose}>×</CloseButton>
-            {imagePath && (
-              <BannerImage $bgPhoto={makeImagePath(imagePath, "w780")} />
+            {mediaData && (
+              <>
+                <BannerImage
+                  $bgPhoto={makeImagePath(mediaData.backdrop_path, "w780")}
+                />
+                <ModalContent>
+                  <ModalTitle>{getTitle(mediaData)}</ModalTitle>
+                  <MetaInfo>
+                    {getDate(mediaData)} • ⭐️{" "}
+                    {mediaData.vote_average.toFixed(1)}
+                  </MetaInfo>
+                  <Overview>{mediaData.overview}</Overview>
+                </ModalContent>
+              </>
             )}
           </ModalContainer>
         </Overlay>

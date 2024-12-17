@@ -16,13 +16,6 @@ const GridSection = styled.section`
   margin-top: 10px;
 `;
 
-// const GridTitle = styled.h2`
-//   font-family: "Poppins", sans-serif;
-//   font-size: clamp(10px, 1.5vw, 16px);
-//   margin-bottom: 20px;
-//   color: ${(props) => props.theme.white.primary};
-// `;
-
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -88,7 +81,7 @@ function MediaGrid({ data, mediaType }: IMediaGridProps) {
 
   const clickedItem = modalMatch?.params.id
     ? data.find((item) => item.id === Number(modalMatch.params.id))
-    : null;
+    : undefined;
 
   return (
     <GridSection>
@@ -112,7 +105,7 @@ function MediaGrid({ data, mediaType }: IMediaGridProps) {
       <Modal
         isOpen={!!modalMatch}
         onClose={onModalClose}
-        imagePath={clickedItem?.backdrop_path}
+        mediaData={clickedItem}
         layoutId={modalMatch?.params.id || ""}
       />
     </GridSection>
