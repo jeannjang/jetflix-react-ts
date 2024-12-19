@@ -123,17 +123,22 @@ function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const { register, handleSubmit, setValue, setFocus } = useForm<ISearchForm>();
+
   const toggleSearch = () => {
     setSearchOpen((prev) => !prev);
+
+    if (!searchOpen) {
+      setTimeout(() => {
+        setFocus("keyword");
+      }, 200);
+    }
   };
 
   const { scrollY } = useScroll();
-
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 30);
   });
-
-  const { register, handleSubmit, setValue } = useForm<ISearchForm>();
 
   const onValid = (data: ISearchForm) => {
     // 추가 공백 제거한 검색어
