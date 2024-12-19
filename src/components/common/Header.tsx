@@ -68,6 +68,7 @@ const Search = styled.form`
   display: flex;
   align-items: center;
   position: relative;
+  cursor: pointer;
   svg {
     height: 20px;
 
@@ -110,7 +111,7 @@ const Input = styled(motion.input)`
   }
 `;
 
-interface IForm {
+interface ISearchForm {
   keyword: string;
 }
 
@@ -119,23 +120,29 @@ function Header() {
   const moviesMatch = useMatch("/browse/movies");
   const seriesMatch = useMatch("/browse/series");
   const navigate = useNavigate();
-
-  const { register, handleSubmit } = useForm<IForm>();
-
   const [searchOpen, setSearchOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const toggleSearch = () => {
     setSearchOpen((prev) => !prev);
   };
 
-  const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 30);
   });
 
-  const onValid = (data: IForm) => {
-    navigate(`/search?keyword=${data.keyword}`);
+  const { register, handleSubmit, setValue } = useForm<ISearchForm>();
+
+  const onValid = (data: ISearchForm) => {
+    // 추가 공백 제거한 검색어
+    const trimmedKeyword = data.keyword.trim();
+    if (trimmedKeyword) {
+      // 공백만 있는 경우 제외
+      navigate(`/search?keyword=${trimmedKeyword}`);
+    }
+    setValue("keyword", ""); // 검색 후 필드 초기화
   };
 
   return (
@@ -185,11 +192,17 @@ function Header() {
             <path d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"></path>
           </motion.svg>
           <Input
-            {...register("keyword", { required: true, minLength: 2 })}
+            {...register("keyword", {
+              required: true,
+              minLength: 1,
+              validate: {
+                notOnlySpaces: (value) => value.trim().length > 0,
+              },
+            })}
             initial={{ scaleX: 0 }}
             animate={{ scaleX: searchOpen ? 1 : 0 }}
             transition={{ type: "linear" }}
-            placeholder="Search for contents..."
+            placeholder="Search by title..."
           />
         </Search>
       </Col>
