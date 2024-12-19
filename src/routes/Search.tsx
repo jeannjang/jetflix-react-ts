@@ -29,7 +29,7 @@ function Search() {
   const location = useLocation();
   const keyword = new URLSearchParams(location.search).get("keyword");
 
-  // 기존 데이터 재사용
+  // client-side 데이터 재사용
   const { data: moviesTrending } = useQuery({
     queryKey: ["movies", "trending"],
     queryFn: getTrendingMovies,

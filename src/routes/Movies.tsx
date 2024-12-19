@@ -62,7 +62,6 @@ function Movies() {
       case "popular":
         return popularData?.results;
       case "all": {
-        // 모든 결과를 하나의 배열로 합침
         const allContent = [
           ...(topRatedData?.results || []),
           ...(trendingData?.results || []),

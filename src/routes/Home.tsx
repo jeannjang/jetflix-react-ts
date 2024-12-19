@@ -133,11 +133,11 @@ function Home() {
 
   const filteredContent = getFilteredContent();
 
-  // 랜덤으로 배너 컨텐츠 선택
+  // 랜덤 배너 컨텐츠 선택
   const bannerContent =
     filteredContent[Math.floor(Math.random() * filteredContent.length)];
 
-  // 아이템이 영화인지 확인하는 타입 가드 함수
+  // 아이템이 영화인지 확인하는 타입 가드
   const isMovie = (media: Media): media is IMovie => {
     return "title" in media;
   };

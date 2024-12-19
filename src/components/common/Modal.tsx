@@ -92,6 +92,14 @@ const ModalTitle = styled.h2`
   margin-bottom: 10px;
 `;
 
+const MediaType = styled.div`
+  color: ${(props) => props.theme.white.second};
+  text-transform: uppercase;
+  font-size: 12px;
+  margin-bottom: 6px;
+  font-weight: 500;
+`;
+
 const MetaInfo = styled.div`
   color: ${(props) => props.theme.white.second};
   font-size: 12px;
@@ -114,6 +122,11 @@ function Modal({ isOpen, onClose, mediaData, layoutId }: IModalProps) {
   const getDate = (data?: IMovie | ITvSeries) => {
     if (!data) return "";
     return "release_date" in data ? data.release_date : data.first_air_date;
+  };
+
+  const getMediaType = (data?: IMovie | ITvSeries) => {
+    if (!data) return "";
+    return "title" in data ? "Movie" : "Series";
   };
 
   return (
@@ -140,6 +153,7 @@ function Modal({ isOpen, onClose, mediaData, layoutId }: IModalProps) {
                 />
                 <ModalContent>
                   <ModalTitle>{getTitle(mediaData)}</ModalTitle>
+                  <MediaType>{getMediaType(mediaData)}</MediaType>
                   <MetaInfo>
                     {getDate(mediaData)} • ⭐️{" "}
                     {mediaData.vote_average.toFixed(1)}

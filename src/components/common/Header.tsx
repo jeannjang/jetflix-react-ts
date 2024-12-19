@@ -33,7 +33,7 @@ const Col = styled.div`
 `;
 
 const Logo = styled(motion.img)`
-  margin-right: 50px;
+  margin-right: 40px;
   width: 80px;
   height: 20px;
 
@@ -47,6 +47,7 @@ const Logo = styled(motion.img)`
 const Items = styled.ul`
   display: flex;
   align-items: center;
+  text-transform: uppercase;
 
   @media (max-width: 768px) {
     /* display: none; // 모바일에서 메뉴 숨기기 */
@@ -56,7 +57,6 @@ const Items = styled.ul`
 const Item = styled.li`
   margin-right: 20px; //!
   color: ${(props) => props.theme.white.primary};
-  transition: color 0.3s ease-in-out;
   position: relative;
   display: flex;
   justify-content: center;
