@@ -19,20 +19,13 @@ import MediaGrid from "../components/common/MediaGrid";
 import { useRecoilState } from "recoil";
 import { homeFilterState } from "../atoms/filterMedia";
 import FilterButtons from "../components/common/FilterButtons";
+import Spinner from "../components/utility/Spinner";
 
 type Media = IMovie | ITvSeries;
 type MediaList = Media[];
 
 const Wrapper = styled.div`
   height: 200vh;
-`;
-
-const Loading = styled.div`
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: ${(props) => props.theme.white.primary};
 `;
 
 const ContentContainer = styled.div`
@@ -145,7 +138,7 @@ function Home() {
   return (
     <Wrapper>
       {isLoading ? (
-        <Loading>Loading...</Loading>
+        <Spinner />
       ) : (
         <>
           {bannerContent && <Banner mediaData={bannerContent} />}

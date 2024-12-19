@@ -11,17 +11,10 @@ import MediaGrid from "../components/common/MediaGrid";
 import { mediaFilterState } from "../atoms/filterMedia";
 import { useRecoilState } from "recoil";
 import FilterButtons from "../components/common/FilterButtons";
+import Spinner from "../components/utility/Spinner";
 
 const Wrapper = styled.div`
   overflow-x: hidden;
-`;
-
-const Loading = styled.div`
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: ${(props) => props.theme.white.primary};
 `;
 
 const ContentContainer = styled.div`
@@ -88,7 +81,7 @@ function Movies() {
   return (
     <Wrapper>
       {isLoading ? (
-        <Loading>Loading...</Loading>
+        <Spinner />
       ) : (
         <>
           {trendingData?.results[0] && (

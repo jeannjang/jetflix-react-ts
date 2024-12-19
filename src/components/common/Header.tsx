@@ -162,7 +162,7 @@ function Header() {
           <Logo
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.3 }}
-            src="/image/jetflix-logo2.png"
+            src="/image/jetflix-logo.png"
             alt="JETFLEX"
           ></Logo>
         </Link>
