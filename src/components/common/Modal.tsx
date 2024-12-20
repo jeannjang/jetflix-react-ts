@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { makeImagePath } from "../../utils/imagePath";
 import { IMovie } from "../../api/moviesApi";
 import { ITvSeries } from "../../api/tvApi";
+import { useRecoilState } from "recoil";
+import { myListState, MyListItem } from "../../atoms/myListState";
+import { Plus, Check } from "lucide-react";
 
 interface IModalProps {
   isOpen: boolean;
@@ -43,6 +46,23 @@ const ModalContainer = styled(motion.div)`
   }
 `;
 
+const BannerImage = styled.div<{ $bgPhoto: string }>`
+  height: 300px;
+  background-image: linear-gradient(
+      to bottom,
+      transparent 40%,
+      ${(props) => props.theme.black.second}
+    ),
+    url(${(props) => props.$bgPhoto});
+  background-size: cover;
+  background-position: center top;
+  padding-bottom: 56.25%;
+
+  @media (max-width: 768px) {
+    height: 200px;
+  }
+`;
+
 const CloseButton = styled.button`
   position: absolute;
   top: 16px;
@@ -63,26 +83,32 @@ const CloseButton = styled.button`
     background: ${(props) => props.theme.black.third};
   }
 `;
+const MyListButton = styled.button`
+  position: relative;
+  margin: -10px 20px 15px;
+  background: ${(props) => props.theme.white.secondTransparent};
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${(props) => props.theme.white.primary};
+  z-index: 2; // 배너 이미지 위에 오도록 z-index 설정
 
-const BannerImage = styled.div<{ $bgPhoto: string }>`
-  height: 300px;
-  background-image: linear-gradient(
-      to bottom,
-      transparent 40%,
-      ${(props) => props.theme.black.second}
-    ),
-    url(${(props) => props.$bgPhoto});
-  background-size: cover;
-  background-position: center top;
-  padding-bottom: 56.25%;
+  &:hover {
+    background: ${(props) => props.theme.black.third};
+  }
 
-  @media (max-width: 768px) {
-    height: 200px;
+  &.active {
+    background: ${(props) => props.theme.white.secondTransparent};
   }
 `;
 
 const ModalContent = styled.div`
-  padding: 20px;
+  padding: 0 20px 20px;
   color: ${(props) => props.theme.white.primary};
 `;
 
@@ -114,6 +140,8 @@ const Overview = styled.p`
 `;
 
 function Modal({ isOpen, onClose, mediaData, layoutId }: IModalProps) {
+  const [myList, setMyList] = useRecoilState(myListState);
+
   const getTitle = (data?: IMovie | ITvSeries) => {
     if (!data) return "";
     return "title" in data ? data.title : data.name;
@@ -127,6 +155,29 @@ function Modal({ isOpen, onClose, mediaData, layoutId }: IModalProps) {
   const getMediaType = (data?: IMovie | ITvSeries) => {
     if (!data) return "";
     return "title" in data ? "Movie" : "Series";
+  };
+
+  const isInMyList = mediaData
+    ? myList.some((item) => item.id === mediaData.id)
+    : false;
+
+  const handleMyList = () => {
+    if (!mediaData) return;
+
+    const newItem: MyListItem = {
+      id: mediaData.id,
+      title: getTitle(mediaData),
+      posterPath: mediaData.poster_path,
+      mediaType: getMediaType(mediaData) as "movie" | "series",
+    };
+
+    if (isInMyList) {
+      setMyList((current) =>
+        current.filter((item) => item.id !== mediaData.id)
+      );
+    } else {
+      setMyList((current) => [...current, newItem]);
+    }
   };
 
   return (
@@ -146,11 +197,18 @@ function Modal({ isOpen, onClose, mediaData, layoutId }: IModalProps) {
             onClick={(e) => e.stopPropagation()}
           >
             <CloseButton onClick={onClose}>×</CloseButton>
+
             {mediaData && (
               <>
                 <BannerImage
                   $bgPhoto={makeImagePath(mediaData.backdrop_path, "w780")}
                 />
+                <MyListButton
+                  onClick={handleMyList}
+                  className={isInMyList ? "active" : ""}
+                >
+                  {isInMyList ? <Check size={20} /> : <Plus size={20} />}
+                </MyListButton>
                 <ModalContent>
                   <ModalTitle>{getTitle(mediaData)}</ModalTitle>
                   <MediaType>{getMediaType(mediaData)}</MediaType>
