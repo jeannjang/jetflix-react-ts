@@ -8,7 +8,7 @@ import {
 import styled from "styled-components";
 import Banner from "../components/common/Banner";
 import MediaGrid from "../components/common/MediaGrid";
-import { mediaFilterState } from "../atoms/filterMedia";
+import { seriesFilterState } from "../atoms/filterMedia";
 import { useRecoilState } from "recoil";
 import FilterButtons from "../components/common/FilterButtons";
 import Spinner from "../components/utility/Spinner";
@@ -24,7 +24,7 @@ const ContentContainer = styled.div`
 `;
 
 function Series() {
-  const [selectedCategory] = useRecoilState(mediaFilterState("series"));
+  const [selectedCategory] = useRecoilState(seriesFilterState);
 
   const { data: trendingData, isLoading: isTrendingLoading } =
     useQuery<IGetTvSeriesResponse>({

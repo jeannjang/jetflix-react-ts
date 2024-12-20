@@ -8,11 +8,15 @@ export type FilterCategory =
   | "popular"
   | null;
 
-export const mediaFilterState = (mediaType: MediaType) =>
-  atom<FilterCategory>({
-    key: `${mediaType}Filter`,
-    default: "all",
-  });
+export const moviesFilterState = atom<FilterCategory>({
+  key: "moviesFilterState",
+  default: "all",
+});
+
+export const seriesFilterState = atom<FilterCategory>({
+  key: "seriesFilterState",
+  default: "all",
+});
 
 export const homeFilterState = atom<FilterCategory>({
   key: "homeFilter",

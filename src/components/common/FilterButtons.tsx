@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import {
-  mediaFilterState,
+  moviesFilterState,
+  seriesFilterState,
   MediaType,
   homeFilterState,
 } from "../../atoms/filterMedia";
@@ -44,7 +45,9 @@ function FilterButtons({ mediaType }: FilterButtonsProps) {
   const [selectedCategory, setSelectedCategory] = useRecoilState(
     mediaType === "home"
       ? homeFilterState
-      : mediaFilterState(mediaType as "movies" | "series")
+      : mediaType === "movies"
+      ? moviesFilterState
+      : seriesFilterState
   );
 
   return (
