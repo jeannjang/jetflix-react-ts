@@ -1,6 +1,7 @@
 import { atom } from "recoil";
 
-export type MediaType = "movies" | "series" | "home";
+export type MediaType = "movies" | "series";
+export type MediaTypeWithHome = MediaType | "home";
 export type FilterCategory =
   | "all"
   | "mustWatch"

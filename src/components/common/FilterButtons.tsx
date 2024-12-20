@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import {
   moviesFilterState,
   seriesFilterState,
-  MediaType,
+  MediaTypeWithHome,
   homeFilterState,
 } from "../../atoms/filterMedia";
 
@@ -38,7 +38,7 @@ const FilterButton = styled.button`
 `;
 
 interface FilterButtonsProps {
-  mediaType: MediaType;
+  mediaType: MediaTypeWithHome;
 }
 
 function FilterButtons({ mediaType }: FilterButtonsProps) {
