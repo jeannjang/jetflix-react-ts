@@ -22,39 +22,45 @@ export async function getTopRatedMovies(
   page: number = 1,
   region: string = "kr"
 ) {
+  const headers = new Headers({
+    Authorization: API_CONFIG.BEARER_TOKEN as string,
+    accept: "application/json",
+  });
+
   const response = await fetch(
     `${API_CONFIG.BASE_URL}/movie/top_rated?language=en-US&page=${page}&region=${region}`,
     {
-      headers: {
-        Authorization: API_CONFIG.BEARER_TOKEN,
-        accept: "application/json",
-      },
+      headers: headers,
     }
   );
   return response.json();
 }
 
 export async function getPopularMovies(page: number = 1) {
+  const headers = new Headers({
+    Authorization: API_CONFIG.BEARER_TOKEN as string,
+    accept: "application/json",
+  });
+
   const response = await fetch(
     `${API_CONFIG.BASE_URL}/movie/popular?language=en-US&page=${page}`,
     {
-      headers: {
-        Authorization: API_CONFIG.BEARER_TOKEN,
-        accept: "application/json",
-      },
+      headers: headers,
     }
   );
   return response.json();
 }
 
 export async function getTrendingMovies() {
+  const headers = new Headers({
+    Authorization: API_CONFIG.BEARER_TOKEN as string,
+    accept: "application/json",
+  });
+
   const response = await fetch(
     `${API_CONFIG.BASE_URL}/trending/movie/week?language=en-US`,
     {
-      headers: {
-        Authorization: API_CONFIG.BEARER_TOKEN,
-        accept: "application/json",
-      },
+      headers: headers,
     }
   );
   return response.json();
