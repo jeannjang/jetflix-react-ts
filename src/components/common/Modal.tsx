@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil";
 import { myListState, MyListItem } from "../../atoms/myListState";
 import { Plus, Check } from "lucide-react";
 import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 interface IModalProps {
   isOpen: boolean;
@@ -69,8 +70,8 @@ const BannerImage = styled.div<{ $bgPhoto: string }>`
 
 const CloseButton = styled.button`
   position: fixed; // absolute에서 fixed로 변경
-  right: max(calc((100% - 700px) / 2 + 16px), 16px); // 모달 우측 상단에 고정
-  top: calc(5vh + 16px); // 모달컨테이너 상단 여백(5vh)을 고려한 위치
+  right: max(calc((100% - 700px) / 2 + 16px), 16px);
+  top: calc(5vh + 16px); // 모달컨테이너 상단 여백(5vh)을 고려
   background: ${(props) => props.theme.black.thirdTransparent};
   border: none;
   border-radius: 50%;
@@ -88,7 +89,7 @@ const CloseButton = styled.button`
   }
   @media (max-width: 768px) {
     right: calc(2.5% + 32px);
-    top: calc(5vh + 16px);
+    top: calc(5vh + 8px);
   }
 `;
 const MyListButton = styled.button`
@@ -150,6 +151,18 @@ const Overview = styled.p`
 function Modal({ isOpen, onClose, mediaData, layoutId }: IModalProps) {
   const [myList, setMyList] = useRecoilState(myListState);
   const location = useLocation();
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
 
   const getTitle = (data?: IMovie | ITvSeries) => {
     if (!data) return "";
