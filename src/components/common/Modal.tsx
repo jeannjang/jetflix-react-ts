@@ -32,18 +32,21 @@ const Overlay = styled(motion.div)`
 const ModalContainer = styled(motion.div)`
   background-color: ${(props) => props.theme.black.second};
   border-radius: 8px;
-  overflow: hidden;
+  overflow-y: auto;
   position: relative;
 
-  // 모바일: 95% 너비
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   width: 95%;
   height: 90vh;
 
-  // 태블릿 이상: 고정 크기
   @media (min-width: 768px) {
     width: 700px;
     height: 90vh;
-    max-height: 800px;
   }
 `;
 
@@ -65,9 +68,9 @@ const BannerImage = styled.div<{ $bgPhoto: string }>`
 `;
 
 const CloseButton = styled.button`
-  position: absolute;
-  top: 16px;
-  right: 16px;
+  position: fixed; // absolute에서 fixed로 변경
+  right: max(calc((100% - 700px) / 2 + 16px), 16px); // 모달 우측 상단에 고정
+  top: calc(5vh + 16px); // 모달컨테이너 상단 여백(5vh)을 고려한 위치
   background: ${(props) => props.theme.black.thirdTransparent};
   border: none;
   border-radius: 50%;
@@ -82,6 +85,10 @@ const CloseButton = styled.button`
 
   &:hover {
     background: ${(props) => props.theme.black.third};
+  }
+  @media (max-width: 768px) {
+    right: calc(2.5% + 32px);
+    top: calc(5vh + 16px);
   }
 `;
 const MyListButton = styled.button`
