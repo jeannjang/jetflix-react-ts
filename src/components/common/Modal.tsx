@@ -47,7 +47,7 @@ const ModalContainer = styled(motion.div)`
 
   @media (min-width: 768px) {
     width: 700px;
-    height: 90vh;
+    height: 80vh;
   }
 `;
 
