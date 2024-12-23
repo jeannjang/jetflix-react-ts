@@ -47,7 +47,7 @@ const ModalContainer = styled(motion.div)`
 
   @media (min-width: 768px) {
     width: 700px;
-    height: 80vh;
+    height: 90vh;
   }
 `;
 
@@ -89,7 +89,7 @@ const CloseButton = styled.button`
   }
   @media (max-width: 768px) {
     right: calc(2.5% + 32px);
-    top: 50px;
+    top: calc(2.5% + 16px);
   }
 `;
 const MyListButton = styled.button`
