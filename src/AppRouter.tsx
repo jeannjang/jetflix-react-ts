@@ -4,6 +4,7 @@ import Home from "./routes/Home";
 import Search from "./routes/Search";
 import Movies from "./routes/Movies";
 import Series from "./routes/Series";
+import MyList from "./routes/MyList";
 
 const AppRouter = createBrowserRouter([
   {
@@ -44,6 +45,23 @@ const AppRouter = createBrowserRouter([
               {
                 path: ":seriesId",
                 element: <Series />,
+              },
+            ],
+          },
+          {
+            path: "my-list",
+            children: [
+              {
+                path: "",
+                element: <MyList />,
+              },
+              {
+                path: "movies/:id",
+                element: <MyList />,
+              },
+              {
+                path: "series/:id",
+                element: <MyList />,
               },
             ],
           },

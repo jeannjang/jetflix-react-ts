@@ -6,6 +6,7 @@ import { ITvSeries } from "../../api/tvApi";
 import { useRecoilState } from "recoil";
 import { myListState, MyListItem } from "../../atoms/myListState";
 import { Plus, Check } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 interface IModalProps {
   isOpen: boolean;
@@ -141,6 +142,7 @@ const Overview = styled.p`
 
 function Modal({ isOpen, onClose, mediaData, layoutId }: IModalProps) {
   const [myList, setMyList] = useRecoilState(myListState);
+  const location = useLocation();
 
   const getTitle = (data?: IMovie | ITvSeries) => {
     if (!data) return "";
@@ -164,17 +166,24 @@ function Modal({ isOpen, onClose, mediaData, layoutId }: IModalProps) {
   const handleMyList = () => {
     if (!mediaData) return;
 
+    // mediaData가 영화인지 시리즈인지 확인
+    const isMovie = "title" in mediaData;
+
     const newItem: MyListItem = {
-      id: mediaData.id,
-      title: getTitle(mediaData),
-      posterPath: mediaData.poster_path,
-      mediaType: getMediaType(mediaData) as "movie" | "series",
+      ...mediaData, // 기본 속성들 복사
+      title: isMovie ? mediaData.title : mediaData.name,
+      name: isMovie ? mediaData.title : mediaData.name,
+      mediaType: isMovie ? "movies" : "series",
     };
 
     if (isInMyList) {
       setMyList((current) =>
         current.filter((item) => item.id !== mediaData.id)
       );
+      // MyList 페이지에서 제거할 때만 모달창 닫기
+      if (location.pathname.includes("/browse/my-list")) {
+        onClose();
+      }
     } else {
       setMyList((current) => [...current, newItem]);
     }

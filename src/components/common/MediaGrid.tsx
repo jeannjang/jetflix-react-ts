@@ -4,7 +4,7 @@ import { IMovie } from "../../api/moviesApi";
 import { ITvSeries } from "../../api/tvApi";
 import { MediaType } from "../../atoms/filterMedia";
 import { makeImagePath } from "../../utils/imagePath";
-import { useNavigate, useMatch } from "react-router-dom";
+import { useNavigate, useMatch, useLocation } from "react-router-dom";
 import Modal from "./Modal";
 
 interface IMediaGridProps {
@@ -66,14 +66,23 @@ const PosterImage = styled.img`
 
 function MediaGrid({ data, mediaType }: IMediaGridProps) {
   const navigate = useNavigate();
-  const modalMatch = useMatch(`/browse/${mediaType}/:id`);
+  const location = useLocation();
+  const isMyList = location.pathname.includes("my-list");
+
+  const browseMatch = useMatch(`/browse/${mediaType}/:id`);
+  const myListMatch = useMatch(`/browse/my-list/${mediaType}/:id`);
+  const modalMatch = isMyList ? myListMatch : browseMatch;
 
   const getTitle = (item: IMovie | ITvSeries) => {
     return "title" in item ? item.title : item.name;
   };
 
   const onModalClicked = (id: number) => {
-    navigate(`/browse/${mediaType}/${id}`);
+    if (isMyList) {
+      navigate(`/browse/my-list/${mediaType}/${id}`);
+    } else {
+      navigate(`/browse/${mediaType}/${id}`);
+    }
   };
 
   const onModalClose = () => {

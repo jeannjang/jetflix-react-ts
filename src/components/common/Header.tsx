@@ -119,6 +119,7 @@ function Header() {
   const homeMatch = useMatch("/browse");
   const moviesMatch = useMatch("/browse/movies");
   const seriesMatch = useMatch("/browse/series");
+  const myListMatch = useMatch("/browse/my-list");
   const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -180,6 +181,11 @@ function Header() {
           <Item>
             <Link to="/browse/series">
               Series {seriesMatch && <Circle layoutId="circle" />}
+            </Link>
+          </Item>
+          <Item>
+            <Link to="/browse/my-list">
+              My List {myListMatch && <Circle layoutId="circle" />}
             </Link>
           </Item>
         </Items>

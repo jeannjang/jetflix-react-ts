@@ -9,8 +9,15 @@ const { persistAtom } = recoilPersist({
 export interface MyListItem {
   id: number;
   title: string;
-  posterPath: string;
-  mediaType: "movie" | "series";
+  name: string;
+  poster_path: string;
+  backdrop_path: string;
+  overview: string;
+  release_date?: string;
+  first_air_date?: string;
+  vote_average: number;
+  genre_ids: number[];
+  mediaType: "movies" | "series";
 }
 
 export const myListState = atom<MyListItem[]>({
@@ -18,3 +25,5 @@ export const myListState = atom<MyListItem[]>({
   default: [],
   effects_UNSTABLE: [persistAtom],
 });
+
+//jetflix
