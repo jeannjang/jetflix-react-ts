@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { CircleChevronDown } from "lucide-react";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -15,10 +16,6 @@ const Nav = styled(motion.nav)`
   padding: clamp(13px, 2vw, 16px) clamp(20px, 4vw, 50px);
   color: ${(props) => props.theme.white.primary};
   z-index: 100;
-
-  @media (max-width: 768px) {
-    font-size: 8px;
-  }
 `;
 
 const Col = styled.div`
@@ -44,13 +41,24 @@ const Logo = styled(motion.img)`
   }
 `;
 
-const Items = styled.ul`
+const Items = styled.ul<{ $isOpen: boolean }>`
   display: flex;
   align-items: center;
   text-transform: uppercase;
 
   @media (max-width: 768px) {
-    /* display: none; // 모바일에서 메뉴 숨기기 */
+    display: ${(props) => (props.$isOpen ? "flex" : "none")};
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 130px;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.9);
+    gap: 5px;
+    margin-left: 5px;
+    border-radius: 5px;
+    border: 1px solid ${(props) => props.theme.white.third};
   }
 `;
 
@@ -61,6 +69,45 @@ const Item = styled.li`
   display: flex;
   justify-content: center;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    margin-right: 0;
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 10px;
+    &:hover {
+      color: ${(props) => props.theme.white.third};
+      border-radius: 5px;
+    }
+  }
+`;
+
+const MenuContainer = styled.div`
+  position: relative;
+`;
+
+const MenuButton = styled.button`
+  text-transform: uppercase;
+  display: none;
+  background: none;
+  border: none;
+  color: ${(props) => props.theme.white.primary};
+  cursor: pointer;
+  padding: 5px;
+
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+  }
+`;
+
+const MenuText = styled.span`
+  display: none;
+  @media (max-width: 768px) {
+    display: inline;
+  }
 `;
 
 const Search = styled.form`
@@ -88,6 +135,9 @@ const Circle = styled(motion.span)`
   right: 0;
   margin: 0 auto;
   background-color: ${(props) => props.theme.red};
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Input = styled(motion.input)`
@@ -123,6 +173,7 @@ function Header() {
   const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { register, handleSubmit, setValue, setFocus } = useForm<ISearchForm>();
 
@@ -167,34 +218,44 @@ function Header() {
             alt="JETFLEX"
           ></Logo>
         </Link>
-        <Items>
-          <Item>
-            <Link to="/browse">
-              Home {homeMatch && <Circle layoutId="circle" />}
-            </Link>
-          </Item>
-          <Item>
-            <Link to="/browse/movies">
-              Movies {moviesMatch && <Circle layoutId="circle" />}
-            </Link>
-          </Item>
-          <Item>
-            <Link to="/browse/series">
-              Series {seriesMatch && <Circle layoutId="circle" />}
-            </Link>
-          </Item>
-          <Item>
-            <Link to="/browse/my-list">
-              My List {myListMatch && <Circle layoutId="circle" />}
-            </Link>
-          </Item>
-        </Items>
+        <MenuContainer>
+          <MenuButton onClick={() => setIsMobileMenuOpen((prev) => !prev)}>
+            <CircleChevronDown size={16} />
+            <MenuText>menu</MenuText>
+          </MenuButton>
+
+          <Items
+            $isOpen={isMobileMenuOpen}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <Item>
+              <Link to="/browse">
+                Home {homeMatch && <Circle layoutId="circle" />}
+              </Link>
+            </Item>
+            <Item>
+              <Link to="/browse/movies">
+                Movies {moviesMatch && <Circle layoutId="circle" />}
+              </Link>
+            </Item>
+            <Item>
+              <Link to="/browse/series">
+                Series {seriesMatch && <Circle layoutId="circle" />}
+              </Link>
+            </Item>
+            <Item>
+              <Link to="/browse/my-list">
+                My List {myListMatch && <Circle layoutId="circle" />}
+              </Link>
+            </Item>
+          </Items>
+        </MenuContainer>
       </Col>
       <Col>
         <Search onSubmit={handleSubmit(onValid)}>
           <motion.svg
             onClick={toggleSearch}
-            animate={{ x: searchOpen ? -160 : 0 }}
+            animate={{ x: searchOpen ? -155 : 0 }}
             transition={{ type: "linear" }}
             fill="currentColor"
             viewBox="0 0 30 30"
