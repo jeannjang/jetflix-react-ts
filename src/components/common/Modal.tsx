@@ -169,12 +169,15 @@ function Modal({ isOpen, onClose, mediaData, layoutId }: IModalProps) {
     // mediaData가 영화인지 시리즈인지 확인
     const isMovie = "title" in mediaData;
 
-    const newItem: MyListItem = {
-      ...mediaData, // 기본 속성들 복사
-      title: isMovie ? mediaData.title : mediaData.name,
-      name: isMovie ? mediaData.title : mediaData.name,
-      mediaType: isMovie ? "movies" : "series",
-    };
+    const newItem: MyListItem = isMovie
+      ? {
+          ...mediaData,
+          mediaType: "movies",
+        }
+      : {
+          ...mediaData,
+          mediaType: "series",
+        };
 
     if (isInMyList) {
       setMyList((current) =>
