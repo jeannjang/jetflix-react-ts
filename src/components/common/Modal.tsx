@@ -89,7 +89,7 @@ const CloseButton = styled.button`
   }
   @media (max-width: 768px) {
     right: calc(2.5% + 32px);
-    top: calc(5vh + 8px);
+    top: calc(5vh + 16px);
   }
 `;
 const MyListButton = styled.button`
