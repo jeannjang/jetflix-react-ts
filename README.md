@@ -2,9 +2,10 @@
 
 [Visit Jetflix web service on this link](https://jetflix-react-ts.pages.dev)  
 This Jetflix web service allows users to browse trending movies and TV series while providing the ability to save favorites or future watchlist items.  
-The app is inspired by Netflix, and offers responsive interface.
+The app is inspired by Netflix, and offers a responsive interface.
 
 ## Quick Overview
+![jetflix recording](https://github.com/user-attachments/assets/d8e4e463-bed4-405e-893a-9d9d6928662d)
 
 ## Features
 
@@ -21,7 +22,7 @@ The app is inspired by Netflix, and offers responsive interface.
 
 - **React18(with TypeScript), React Router DOM v6, React Hook Form, React Query** (createBrowserRouter, From validation and handling, data fetching, caching)
 - **Recoil, Recoil Persist**  
-  (UI state management with atoms, Local storage persistence for user pereferences)
+  (UI state management with atoms, Local storage persistence for user preferences)
 - **Styling** (Styled Components, Global Styles, Theme Support)
 - **Animations(motion)** (animation library for smooth transitions)
 
@@ -61,4 +62,4 @@ The app is inspired by Netflix, and offers responsive interface.
 
 ## Deployment
 
-This project is set up for automatic deployment via Cloudflare Pages. Each commit to the main branch triggers a new build and deployment. The updated site is going to Cloudflare's global network.
+This project is set up for automatic deployment via Cloudflare Pages. Each commit to the main branch triggers a new build and deployment, and the updated site is sent to Cloudflare's global network.
