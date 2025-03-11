@@ -5,7 +5,8 @@ This Jetflix web service allows users to browse trending movies and TV series wh
 The app is inspired by Netflix, and offers a responsive interface.
 
 ## Quick Overview
-![jetflix recording](https://github.com/user-attachments/assets/d8e4e463-bed4-405e-893a-9d9d6928662d)
+![jetflix_recording](https://github.com/user-attachments/assets/fd3306aa-678a-4f51-9046-915ec913d853)
+
 
 ## Features
 
