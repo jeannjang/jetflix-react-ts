@@ -12,6 +12,7 @@ const Wrapper = styled.div`
 
 const Title = styled.h2`
   font-size: 24px;
+  text-align: center;
   margin-bottom: 20px;
   color: ${(props) => props.theme.white.primary};
   padding: 0 clamp(20px, 4vw, 50px);
@@ -21,6 +22,7 @@ const EmptyMessage = styled.p`
   text-align: center;
   color: ${(props) => props.theme.white.second};
   font-size: 16px;
+  line-height: 1.5;
   margin-top: 40px;
   padding: 0 20px;
 `;
@@ -40,7 +42,9 @@ function MyList() {
       <Title>My List</Title>
       {myList.length === 0 ? (
         <EmptyMessage>
-          Your list is empty. What do you want to keep?
+          Your list is currently empty, <br />
+          Save your favourite content for later. <br />
+          (My List isn't shared across devices)
         </EmptyMessage>
       ) : (
         <>
