@@ -2,12 +2,7 @@ import { atom } from "recoil";
 
 export type MediaType = "movies" | "series";
 export type MediaTypeWithHome = MediaType | "home";
-export type FilterCategory =
-  | "all"
-  | "mustWatch"
-  | "trending"
-  | "popular"
-  | null;
+export type FilterCategory = "all" | "mustWatch" | "trending" | "popular";
 
 export const moviesFilterState = atom<FilterCategory>({
   key: "moviesFilterState",
